@@ -141,8 +141,8 @@ static void * allocateObject(size_t size)
 		p->boundary_tag._objectSizeAndAlloc = p->boundary_tag._objectSizeAndAlloc | 1;
 
 		//remove the block from the list relink
-		p->free_list_node->_next->_prev = p->free_list_node->_prev;
-		p->free_list_node->_prev->_next = p->free_list_node->_next;
+		p->free_list_node._next._prev = p->free_list_node->_prev;
+		p->free_list_node._prev._next = p->free_list_node->_next;
 
 		break;
 	}
