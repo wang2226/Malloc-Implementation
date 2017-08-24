@@ -157,7 +157,7 @@ static void * allocateObject(size_t size)
 		//new boundary tag
 		//update the size, left object size and allocated bit of newTag
 		BoundaryTag * newTag = (BoundaryTag *)temp;
-		newTag->_objectAndAlloc = real_size;
+		newTag->_objectSizeAndAlloc = real_size;
 		newTag->_leftObjectSize = p->boundary_tag._objectSizeAndAlloc;
 		newTag->_objectSizeAndAlloc = newTag->_objectSizeAndAlloc | 1;
 
@@ -166,7 +166,7 @@ static void * allocateObject(size_t size)
 	}
 
 	//update the pointer
-	p = p->free_list_node.next;
+	p = p->free_list_node._next;
   }
 
   pthread_mutex_unlock(&mutex);
