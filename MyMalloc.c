@@ -137,7 +137,7 @@ static void * allocateObject(size_t size)
 	//the block is not large enough to be split, simply remove the block from the list and return it
 	if(p->boundary_tag._objectSizeAndAlloc >= real_size 
 	   && p->boundary_tag._objectSizeAndAlloc < real_size + tag_size + 8){
-		//change the last bit of _objectSizeAndAlloc
+		//set the last bit of _objectSizeAndAlloc
 		p->boundary_tag._objectSizeAndAlloc = p->boundary_tag._objectSizeAndAlloc | 1;
 
 		//remove the block from the list relink
@@ -148,9 +148,25 @@ static void * allocateObject(size_t size)
 	}
 	//the block needs to be split in two
 	else if(p->boundary_tag._objectSizeAndAlloc >= real_size + tag_size + 8){
+		//update the current block size
+		p->boundary_tag._objectSizeAndAlloc = p->boundary_tag._objectSizeAndAlloc - real_size;
 
+		//set a pointer to where to split
+		void * temp = (void *)p + p->boundary_tag._objectSizeAndAlloc;
+
+		//new boundary tag
+		//update the size, left object size and allocated bit of newTag
+		BoundaryTag * newTag = (BoundaryTag *)temp;
+		newTag->_objectAndAlloc = real_size;
+		newTag->_leftObjectSize = p->boundary_tag._objectSizeAndAlloc;
+		newTag->_objectSizeAndAlloc = newTag->_objectSizeAndAlloc | 1;
+
+		p = newTag;
+		break;
 	}
 
+	//update the pointer
+	p = p->free_list_node.next;
   }
 
   pthread_mutex_unlock(&mutex);
