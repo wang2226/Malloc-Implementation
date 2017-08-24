@@ -135,7 +135,7 @@ static void * allocateObject(size_t size)
   	flag = 0;	
 
 	//the block is not large enough to be split, simply remove the block from the list and return it
-	if(p.boundary_tag->_objectSizeAndAlloc >= real_size && p.boundary_tag->_objectSizeAndAlloc < realSize + tag_size + 8){
+	if(p->boundary_tag->_objectSizeAndAlloc >= real_size && p->boundary_tag->_objectSizeAndAlloc < realSize + tag_size + 8){
 		//change the last bit of _objectSizeAndAlloc
 		p.boundary_tag->_objectSizeAndAlloc = p.boundary_tag->_objectSizeAndAlloc | 1;
 
