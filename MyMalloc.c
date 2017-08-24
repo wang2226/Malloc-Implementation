@@ -128,6 +128,7 @@ static void * allocateObject(size_t size)
 
   FreeObject * p = _freeList->free_list_node._next;
 
+  //flag to signal that the list doesn't have enought memory
   int flag = 0;
 
   //traverse the free list from the beginning
@@ -146,6 +147,7 @@ static void * allocateObject(size_t size)
 
 		break;
 	}
+
 	//the block needs to be split in two
 	else if(p->boundary_tag._objectSizeAndAlloc >= real_size + tag_size + 8){
 		//update the current block size
@@ -165,9 +167,18 @@ static void * allocateObject(size_t size)
 		break;
 	}
 
+	//the list doesn't have enough memory, request a new 2MB block, insert the block into the free list
+	else {
+		flag = 1;
+	}
+
 	//update the pointer
 	p = p->free_list_node._next;
   }
+
+  //handle the case that the list doesn/t have enough memory
+  if(flag)
+	  return getNewChunk(size);
 
   pthread_mutex_unlock(&mutex);
   return getMemoryFromOS(size);
