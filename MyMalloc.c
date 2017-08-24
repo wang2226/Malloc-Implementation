@@ -163,7 +163,7 @@ static void * allocateObject(size_t size)
 		newChunk->boundary_tag._leftObjectSize = p->boundary_tag._objectSizeAndAlloc;
 		newChunk->boundary_tag._objectSizeAndAlloc = newChunk->boundary_tag._objectSizeAndAlloc | 1;
 
-		p = newTag;
+		p = newChunk;
 		break;
 	}
 
