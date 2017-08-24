@@ -158,10 +158,10 @@ static void * allocateObject(size_t size)
 
 		//new boundary tag
 		//update the size, left object size and allocated bit of newTag
-		BoundaryTag * newTag = (BoundaryTag *)temp;
-		newTag->_objectSizeAndAlloc = real_size;
-		newTag->_leftObjectSize = p->boundary_tag._objectSizeAndAlloc;
-		newTag->_objectSizeAndAlloc = newTag->_objectSizeAndAlloc | 1;
+		FreeObject * newChunck = (FreeObject *)newChunk;
+		newChunk->boundary_tag._objectSizeAndAlloc = real_size;
+		newChunk->boundary_tag._leftObjectSize = p->boundary_tag._objectSizeAndAlloc;
+		newChunk->boundary_tag._objectSizeAndAlloc = newChunk->boundary_tag._objectSizeAndAlloc | 1;
 
 		p = newTag;
 		break;
