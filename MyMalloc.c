@@ -135,13 +135,14 @@ static void * allocateObject(size_t size)
   	flag = 0;	
 
 	//the block is not large enough to be split, simply remove the block from the list and return it
-	if(p->_objectSizeAndAlloc >= real_size && p->boundary_tag->_objectSizeAndAlloc < realSize + tag_size + 8){
+	if(p->boundary_tag._objectSizeAndAlloc >= real_size 
+	   && p->boundary_tag._objectSizeAndAlloc < realSize + tag_size + 8){
 		//change the last bit of _objectSizeAndAlloc
-		p.boundary_tag->_objectSizeAndAlloc = p.boundary_tag->_objectSizeAndAlloc | 1;
+		p->boundary_tag._objectSizeAndAlloc = p->boundary_tag._objectSizeAndAlloc | 1;
 
 		//remove the block from the list relink
-		p->_next->_prev = p->_prev;
-		p->_prev->next = p->_next;
+		p->free_list_node._next._prev = p->free_list_node._prev;
+		p->free_list_node._prev._next = p->free_list_node._next;
 
 		break;
 	}
