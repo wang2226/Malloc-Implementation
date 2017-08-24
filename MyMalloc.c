@@ -123,8 +123,7 @@ static void * allocateObject(size_t size)
   size = (size + 8 - 1) & ~(8 - 1);
 
   //add the size of the block's header
-  //size_t tag_size = (sizeof(BoundaryTag) + 8 - 1) & ~(8 - 1);
-  size_t real_size = size + sizeof(BoundaryTag);
+  size_t real_size = size + sizeof(BoundaryTag) + sizeof(FreeListNode);
 
   FreeObject * p = _freeList->free_list_node._next;
 
@@ -137,7 +136,7 @@ static void * allocateObject(size_t size)
 
 	//the block is not large enough to be split, simply remove the block from the list and return it
 	if(p->boundary_tag._objectSizeAndAlloc >= real_size 
-	   && p->boundary_tag._objectSizeAndAlloc < real_size + sizeof(BoundaryTag) + 8){
+	   && p->boundary_tag._objectSizeAndAlloc < real_size + sizeof(BoundaryTag) + sizeof(FreeListNode) + 8){
 		//set the last bit of _objectSizeAndAlloc
 		p->boundary_tag._objectSizeAndAlloc = p->boundary_tag._objectSizeAndAlloc | 1;
 
@@ -149,7 +148,7 @@ static void * allocateObject(size_t size)
 	}
 
 	//the block needs to be split in two
-	else if(p->boundary_tag._objectSizeAndAlloc >= real_size + sizeof(BoundaryTag) + 8){
+	else if(p->boundary_tag._objectSizeAndAlloc >= real_size + sizeof(BoundaryTag) + sizeof(FreeListNode) + 8){
 		//update the current block size
 		p->boundary_tag._objectSizeAndAlloc = p->boundary_tag._objectSizeAndAlloc - real_size;
 
