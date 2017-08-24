@@ -126,7 +126,7 @@ static void * allocateObject(size_t size)
   size_t tag_size = (sizeof(BoundaryTag) + 8 - 1) & ~(8 - 1);
   size_t real_size = size + tag_size;
 
-  FreeListNode * p = free_list_node->_next;
+  FreeObject * p = _freeList->_next;
 
   int flag = 0;
 
