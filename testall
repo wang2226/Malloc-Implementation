@@ -52,9 +52,9 @@ function runtest {
 # List of tests running
 runtest test0 "" none 5
 runtest test1-1 "" none 5
-runtest test1-1 "" none 5
-runtest test1-1 "" none 5
-runtest test1-1 "" none 5
+runtest test1-2 "" none 5
+runtest test1-3 "" none 5
+runtest test1-4 "" none 5
 runtest test1 "" none 5
 runtest test2 "" none 5
 runtest test3 "" none 5

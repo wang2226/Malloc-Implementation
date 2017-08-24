@@ -119,6 +119,39 @@ static void * allocateObject(size_t size)
   if (!_initialized)
     initialize();
 
+  //round up the requested size to the next 8 byte boundary
+  size = (size + 8 - 1) & ~(8 - 1);
+
+  //add the size of the block's header
+  size_t tag_size = (sizeof(BoundaryTag) + 8 - 1) & ~(8 - 1);
+  size_t real_size = size + tag_size;
+
+  FreeObject * p = free_list_node->_next;
+
+  int flag = 0;
+
+  //traverse the free list from the beginning
+  while(p != free_list_node){
+  	flag = 0;	
+
+	//the block is not large enough to be split, simply remove the block from the list and return it
+	if(p->_objectSizeAndAlloc >= real_size && p->objectSizeAndAlloc < realSize + tag_size + 8){
+		//change the last bit of _objectSizeAndAlloc
+		p->_objectSizeAndAlloc = p->_objectSizeAndAlloc | 1;
+
+		//remove the block from the list relink
+		p->_next->_prev = p->_prev;
+		p->_prev->next = p->_next;
+
+		break;
+	}
+	//the block needs to be split in two
+	else if(p->_objectSizeAndAlloc >= real_size + tag_size + 8){
+
+	}
+
+  }
+
   pthread_mutex_unlock(&mutex);
   return getMemoryFromOS(size);
 }
