@@ -120,10 +120,10 @@ static void * allocateObject(size_t size)
     initialize();
 
   //round up the requested size to the next 8 byte boundary
-  size = (size + 8 - 1) & ~(8 - 1);
+  //size = (size + 8 - 1) & ~(8 - 1);
 
   //add the size of the block's header
-  size_t real_size = size + sizeof(BoundaryTag) + sizeof(FreeListNode);
+  size_t real_size = (size + sizeof(BoundaryTag) + sizeof(FreeListNode) + 7) & ~7;
 
   FreeObject * p = _freeListSentinel->free_list_node._next;
 
