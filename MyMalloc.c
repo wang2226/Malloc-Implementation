@@ -131,7 +131,7 @@ static void * allocateObject(size_t size)
   int flag = 0;
 
   //traverse the free list from the beginning
-  while(p != _freeListSentinel){
+  while(p != _freeList){
   	flag = 0;	
 
 	//the block is not large enough to be split, simply remove the block from the list and return it
@@ -194,7 +194,7 @@ static void * allocateObject(size_t size)
 static void freeObject(void *ptr)
 {
   //p points to the start of the free list
-  FreeObject * p = _freeListSentinel->free_list_node._next;
+  FreeObject * p = _freeList->free_list_node._next;
 
   int leftFree = 0;
   int rightFree = 0;
@@ -254,9 +254,9 @@ static void freeObject(void *ptr)
   //merge neither
   else {
 	  //add the block to the head of the free list
-	  _freeListSentinel->boundary_tag._next = curr;
-	  curr->boundary_tag._next = _freeListSentinel->boundary_tag._next;
-	  curr->boundary_tag._prev = _freeListSentinel;
+	  _freeList->boundary_tag._next = curr;
+	  curr->boundary_tag._next = _freeList->boundary_tag._next;
+	  curr->boundary_tag._prev = _freeList;
 
 	  //set the last bit of objectSizeAndAlloc
 	  curr->boundary_tag._objectSizeAndAlloc = curr->boundary_tag._objectSizeAndAlloc & 0;
