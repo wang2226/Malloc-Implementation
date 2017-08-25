@@ -131,7 +131,7 @@ static void * allocateObject(size_t size)
   int flag = 0;
 
   //traverse the free list from the beginning
-  while(p != _freeList){
+  while(p != _freeListSentinel){
   	flag = 0;	
 
 	//the block is not large enough to be split, simply remove the block from the list and return it
