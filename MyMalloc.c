@@ -125,7 +125,7 @@ static void * allocateObject(size_t size)
   //add the size of the block's header
   size_t real_size = size + sizeof(BoundaryTag) + sizeof(FreeListNode);
 
-  FreeObject * p = _freeListSentinel.free_list_node._next;
+  FreeObject * p = _freeListSentinel->free_list_node._next;
 
   //flag to signal that the list doesn't have enought memory
   int flag = 0;
