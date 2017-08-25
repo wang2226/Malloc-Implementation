@@ -234,8 +234,8 @@ static void freeObject(void *ptr)
 	  curr->boundary_tag._objectSizeAndAlloc += right->boundary_tag._objectSizeAndAlloc;
 
 	  //relink the free list
-	  curr->boundary_tag._next = right->boundary_tag._next;
-	  right->boundary_tag._next->boundary_tag._prev = curr;
+	  curr->free_list_node._next = right->boundary_tag._next;
+	  right->free_list_node._next->boundary_tag._prev = curr;
 
 	  //set the last bit of objectSizeAndAlloc
 	  curr->boundary_tag._objectSizeAndAlloc = curr->boundary_tag._objectSizeAndAlloc & 0;
@@ -254,9 +254,9 @@ static void freeObject(void *ptr)
   //merge neither
   else {
 	  //add the block to the head of the free list
-	  _freeList->boundary_tag._next = curr;
-	  curr->boundary_tag._next = _freeList->boundary_tag._next;
-	  curr->boundary_tag._prev = _freeList;
+	  _freeList->free_list_node._next = curr;
+	  curr->free_list_node._next = _freeList->free_list_node._next;
+	  curr->free_list_node._prev = _freeList;
 
 	  //set the last bit of objectSizeAndAlloc
 	  curr->boundary_tag._objectSizeAndAlloc = curr->boundary_tag._objectSizeAndAlloc & 0;
