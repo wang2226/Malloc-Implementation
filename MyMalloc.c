@@ -120,10 +120,10 @@ static void * allocateObject(size_t size)
     initialize();
 
   //round up the requested size to the next 8 byte boundary
-  //size = (size + 8 - 1) & ~(8 - 1);
+  size = (size + 8 - 1) & ~(8 - 1);
 
   //add the size of the block's header
-  size_t real_size = (size + sizeof(BoundaryTag) + sizeof(FreeListNode) + 7) & ~7;
+  size_t real_size = size + sizeof(BoundaryTag) + sizeof(FreeListNode);
 
   FreeObject * p = _freeListSentinel->free_list_node._next;
 
@@ -193,6 +193,75 @@ static void * allocateObject(size_t size)
  */
 static void freeObject(void *ptr)
 {
+  //p points to the start of the free list
+  FreeObject * p = _freeListSentinel->free_list_node._next;
+
+  int leftFree = 0;
+  int rightFree = 0;
+
+  //curr points to the current free object
+  void * temp = (void *)ptr - sizeof(BoundaryTag) - sizeof(FreeListNode);
+  FreeObject * curr = (FreeObject *)temp;
+
+  //left points to the left free object and set leftFree
+  temp = temp - curr->boundary_tag._leftObjectSize;
+  FreeObject * left = (FreeObject *)temp;
+
+  if((left->boundary_tag._objectSizeAndAlloc | 1) != 0){
+	  leftFree = 1;
+  }
+
+  //right points to the right free object and set rightFree
+  temp = temp + curr->boundary_tag._objectSizeAndAlloc;
+  FreeObject * right = (FreeObject *)temp;
+
+  if((right->boundary_tag._objectSizeAndAlloc | 1) != 0){
+	  rightFree = 1;
+  }
+
+  //merge with left
+  if(leftFree){
+	  //update left object size
+	  left->boundary_tag._objectSizeAndAlloc += curr->boundary_tag._objectSizeAndAlloc;
+	
+	  //update right object size
+	  right->boundary_tag._objectSizeAndAlloc = left->boundary_tag._objectSizeAndAlloc;
+  }
+
+  //merge with right
+  else if(rightFree){
+	  //update the curr object size
+	  curr->boundary_tag._objectSizeAndAlloc += right->boundary_tag._objectSizeAndAlloc;
+
+	  //relink the free list
+	  curr->boundary_tag._next = right->boundary_tag._next;
+	  right->boundary_tag._next->boundary_tag._prev = curr;
+
+	  //set the last bit of objectSizeAndAlloc
+	  curr->boundary_tag._objectSizeAndAlloc = curr->boundary_tag._objectSizeAndAlloc & 0;
+
+	  //update _leftObjectSize of the right free object of right
+	  void * temp = (void *)right + right->boundary_tag._objectSizeAndAlloc;
+	  FreeObject * rightRight = (FreeObject *)temp;
+	  rightRight->boundary_tag._leftObjectSize = curr->boundary_tag._objectSizeAndAlloc;
+  }
+
+  //merge both
+  if(leftFree && rightFree){
+
+  }
+
+  //merge neither
+  else {
+	  //add the block to the head of the free list
+	  _freeListSentinel->boundary_tag._next = curr;
+	  curr->boundary_tag._next = _freeListSentinel->boundary_tag._next;
+	  curr->boundary_tag._prev = _freeListSentinel;
+
+	  //set the last bit of objectSizeAndAlloc
+	  curr->boundary_tag._objectSizeAndAlloc = curr->boundary_tag._objectSizeAndAlloc & 0;
+  }
+
   return;
 }
 
