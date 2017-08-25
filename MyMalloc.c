@@ -234,8 +234,8 @@ static void freeObject(void *ptr)
 	  curr->boundary_tag._objectSizeAndAlloc += right->boundary_tag._objectSizeAndAlloc;
 
 	  //relink the free list
-	  curr->free_list_node._next = right->boundary_tag._next;
-	  right->free_list_node._next->boundary_tag._prev = curr;
+	  curr->free_list_node._next = right->free_list_node._next;
+	  right->free_list_node._next->free_list_node._prev = curr;
 
 	  //set the last bit of objectSizeAndAlloc
 	  curr->boundary_tag._objectSizeAndAlloc = curr->boundary_tag._objectSizeAndAlloc & 0;
