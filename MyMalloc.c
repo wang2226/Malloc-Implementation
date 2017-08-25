@@ -153,7 +153,7 @@ static void * allocateObject(size_t size)
 		p->boundary_tag._objectSizeAndAlloc = p->boundary_tag._objectSizeAndAlloc - real_size;
 
 		//set a pointer to where to split
-		char * temp = (char *)p + p->boundary_tag._objectSizeAndAlloc;
+		void * temp = (void *)p + p->boundary_tag._objectSizeAndAlloc;
 
 		//new boundary tag
 		//update the size, left object size and allocated bit of newTag
