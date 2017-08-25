@@ -250,7 +250,7 @@ static void freeObject(void *ptr)
   if(leftFree && rightFree){
 	  //update left's object size
 	  left->boundary_tag._objectSizeAndAlloc = left->boundary_tag._objectSizeAndAlloc
-	  + curr->coundary_tag._objectSizeAndAlloc + right->boundary_tag._objectSizeAndAlloc;
+	  + curr->boundary_tag._objectSizeAndAlloc + right->boundary_tag._objectSizeAndAlloc;
 
 	  //
   	  
