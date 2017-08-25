@@ -248,7 +248,12 @@ static void freeObject(void *ptr)
 
   //merge both
   if(leftFree && rightFree){
+	  //update left's object size
+	  left->boundary_tag._objectSizeAndAlloc = left->boundary_tag._objectSizeAndAlloc
+	  + curr->coundary_tag._objectSizeAndAlloc + right->boundary_tag._objectSizeAndAlloc;
 
+	  //
+  	  
   }
 
   //merge neither
