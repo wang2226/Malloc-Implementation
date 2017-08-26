@@ -165,10 +165,10 @@ static void * allocateObject(size_t size)
 		
 		//update newChunk's next's _leftObjSize
 		temp = temp + real_size;
-		FreeObject * rightHeader = (FreeObject *)temp;
-		rightHeader->boundary_tag._leftObjectSize = getSize(&(newChunk->boundary_tag));
+		BoundaryTag * rightHeader = (BoundaryTag *)temp;
+		rightHeader->_leftObjectSize = getSize(newChunk);
 
-		p = newChunk;
+		p = (FreeObject *)newChunk;
 		break;
 	}
 
