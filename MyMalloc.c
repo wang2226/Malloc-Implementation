@@ -123,7 +123,7 @@ static void * allocateObject(size_t size)
   size_t round_size = (size + 8 - 1) & ~(8 - 1);
 
   //add the size of the block's header
-  size_t real_size = size + sizeof(BoundaryTag);
+  size_t real_size = round_size + sizeof(BoundaryTag);
 
   FreeObject * p = _freeList->free_list_node._next;
 
@@ -154,14 +154,19 @@ static void * allocateObject(size_t size)
 		setSize(&(p->boundary_tag),obj_size - real_size);
 
 		//set a pointer to where to split
-		void * temp = (void *)p + p->boundary_tag._objectSizeAndAlloc;
+		char * temp = (char *)p + obj_size - real_size;
 
 		//new boundary tag
 		//update the size, left object size and allocated bit of newTag
 		FreeObject * newChunk = (FreeObject *)temp;
-		newChunk->boundary_tag._objectSizeAndAlloc = real_size;
-		newChunk->boundary_tag._leftObjectSize = p->boundary_tag._objectSizeAndAlloc;
-		newChunk->boundary_tag._objectSizeAndAlloc = newChunk->boundary_tag._objectSizeAndAlloc | 1;
+		setSize(&(newChunk->boundary_tag),real_size);
+		newChunk->boundary_tag._leftObjectSize = getSize(&(p->boundary_tag));
+		setAllocated(&(newChunk->boundary_tag),1);
+		
+		//update newChunk's next's _leftObjSize
+		temp = temp + real_size;
+		FreeObject * rightHeader = (FreeObject *)temp;
+		rightHeader->boundary_tag._leftObjectSize = getSize(&(newChunk->boundary_tag));
 
 		p = newChunk;
 		break;
@@ -170,7 +175,6 @@ static void * allocateObject(size_t size)
 	//the list doesn't have enough memory, request a new 2MB block, insert the block into the free list
 	else {
 		flag = 1;
-		break;
 	}
 
 	//update the pointer
@@ -182,7 +186,7 @@ static void * allocateObject(size_t size)
 	  return getNewChunk(size);
 
   pthread_mutex_unlock(&mutex);
-  return getMemoryFromOS(size);
+  return (void *)((BoundaryTag *)p + 1);
 }
 
 /**
