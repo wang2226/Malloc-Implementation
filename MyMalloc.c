@@ -231,7 +231,7 @@ static void freeObject(void *ptr)
 	  setSize(left,temp_size);
 
 	  //remove right from free list
-	  while(p->free_list_node._next != (Free Object *)right){
+	  while(p->free_list_node._next != (FreeObject *)right){
 		  p = p->free_list_node._next;
 	  }
 	  p->free_list_node._next = right->free_list_node._next;
