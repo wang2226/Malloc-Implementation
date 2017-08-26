@@ -278,8 +278,8 @@ static void freeObject(void *ptr)
   //merge neither
   else {
 	  //add the block to the head of the free list
-	  (FreeObject *)curr->free_list_node._next = _freeList->free_list_node._next;
-	  (FreeObject *)curr->free_list_node._prev = _freeList;
+	  ((FreeObject *)curr)->free_list_node._next = _freeList->free_list_node._next;
+	  ((FreeObject *)curr)->free_list_node._prev = _freeList;
 	  _freeList->free_list_node._next = (FreeObject *)curr;
 
 	  //set the last bit of objectSizeAndAlloc
