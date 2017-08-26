@@ -235,7 +235,7 @@ static void freeObject(void *ptr)
 		  p = p->free_list_node._next;
 	  }
 	  p->free_list_node._next = ((FreeObject *)right)->free_list_node._next;
-	  ((FreeObject *)right)->free_list_node->._next->free_list_node._prev = p; 
+	  ((FreeObject *)right)->free_list_node->_next->free_list_node._prev = p; 
 
 	  //update right's next's _leftObjSize
 	  char * temp = (char *)right + getSize(right);
