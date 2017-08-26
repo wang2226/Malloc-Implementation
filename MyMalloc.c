@@ -138,7 +138,7 @@ static void * allocateObject(size_t size)
 	if(p->boundary_tag._objectSizeAndAlloc >= real_size 
 	   && p->boundary_tag._objectSizeAndAlloc < real_size + sizeof(BoundaryTag) + sizeof(FreeListNode) + 8){
 		//set the last bit of _objectSizeAndAlloc
-		p->boundary_tag._objectSizeAndAlloc = p->boundary_tag._objectSizeAndAlloc | 1;
+		setAllocated(p,1);
 
 		//remove the block from the list relink
 		p->free_list_node._next->free_list_node._prev = p->free_list_node._prev;
@@ -150,7 +150,7 @@ static void * allocateObject(size_t size)
 	//the block needs to be split in two
 	else if(p->boundary_tag._objectSizeAndAlloc >= real_size + sizeof(BoundaryTag) + sizeof(FreeListNode) + 8){
 		//update the current block size
-		p->boundary_tag._objectSizeAndAlloc = p->boundary_tag._objectSizeAndAlloc - real_size;
+		setSize(p,size);
 
 		//set a pointer to where to split
 		void * temp = (void *)p + p->boundary_tag._objectSizeAndAlloc;
@@ -169,6 +169,7 @@ static void * allocateObject(size_t size)
 	//the list doesn't have enough memory, request a new 2MB block, insert the block into the free list
 	else {
 		flag = 1;
+		break;
 	}
 
 	//update the pointer
