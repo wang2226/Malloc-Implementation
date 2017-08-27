@@ -151,6 +151,8 @@ static void * allocateObject(size_t size)
 	//the block needs to be split in two
 	else if(obj_size >= real_size + sizeof(BoundaryTag) + sizeof(FreeListNode) + 8){
 		//update the current block size
+		printf("obj size = %u, real Size = %u\n", obj_size, real_size);
+		fflush(stdout);
 		setSize(&(p->boundary_tag),(obj_size - real_size));
 
 		//set a pointer to where to split
@@ -161,8 +163,6 @@ static void * allocateObject(size_t size)
 		BoundaryTag * newChunk = (BoundaryTag *)temp;
 		setSize(newChunk,real_size);
 		newChunk->_leftObjectSize = getSize(&(p->boundary_tag));
-		printf("newChunk->left size = %u, real Size = %u\n", newChunk->_leftObjectSize, real_size);
-		fflush(stdout);
 		setAllocated(newChunk,1);
 		
 		//update newChunk's next's _leftObjSize
