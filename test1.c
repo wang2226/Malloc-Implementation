@@ -11,6 +11,8 @@ int main() {
   int i;
   for ( i = 0; i < allocations; i++ ) {
     char * p1 = (char *) malloc(15 );
+	printf("i = %d", i);
+	fflush();
     *p1 = 100;
   }
   print_list();
