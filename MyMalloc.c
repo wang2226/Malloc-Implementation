@@ -160,7 +160,8 @@ static void * allocateObject(size_t size)
 		//update the size, left object size and allocated bit of newTag
 		BoundaryTag * newChunk = (BoundaryTag *)temp;
 		setSize(newChunk,real_size);
-		printf("newChunk->_object size = %u, real Size = %u\n", newChunk->_objectSizeAndAlloc, real_size);
+		//printf("newChunk->_object size = %u, real Size = %u\n", newChunk->_objectSizeAndAlloc, real_size);
+		printf("newChunk->_object size = %u, real Size = %u\n", getSize(newChunk), real_size);
 		fflush(stdout);
 		newChunk->_leftObjectSize = getSize(&(p->boundary_tag));
 		setAllocated(newChunk,1);
