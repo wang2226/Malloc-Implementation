@@ -123,7 +123,7 @@ static void * allocateObject(size_t size)
   size_t round_size = (size + 8 - 1) & ~(8 - 1);
 
   //add the size of the block's header
-  size_t real_size = round_size + sizeof(BoundaryTag);
+  size_t real_size = round_size + sizeof(BoundaryTag) + sizeof(FreeListNode);
 
   FreeObject * p = _freeList->free_list_node._next;
 
