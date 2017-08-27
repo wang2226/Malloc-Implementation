@@ -26,7 +26,7 @@
 
 pthread_mutex_t mutex;
 
-static bool verbose = false;
+static bool verbose = true;
 
 extern void atExitHandlerInC()
 {
@@ -159,7 +159,7 @@ static void * allocateObject(size_t size)
 		//new boundary tag
 		//update the size, left object size and allocated bit of newTag
 		BoundaryTag * newChunk = (BoundaryTag *)temp;
-		printf("newChunk->_object size = %u, real Size = %u\n", newChunk->_objectSizeAndAlloc, real_size);
+		//printf("newChunk->_object size = %u, real Size = %u\n", newChunk->_objectSizeAndAlloc, real_size);
 		setSize(newChunk,real_size);
 		newChunk->_leftObjectSize = getSize(&(p->boundary_tag));
 		setAllocated(newChunk,1);
