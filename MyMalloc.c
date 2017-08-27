@@ -246,7 +246,7 @@ static void freeObject(void *ptr)
   //merge with left
   else if(leftFree){
 	  //update left object size
-	  setSize(left,getSize(left) + getSize(curr));
+	  setSize(left,(getSize(left) + getSize(curr)));
 	
 	  //update right's left_object_size
 	  right->_leftObjectSize = getSize(left);
@@ -255,7 +255,7 @@ static void freeObject(void *ptr)
   //merge with right
   else if(rightFree){
 	  //update the curr object size
-	  setSize(curr, getSize(curr) + getSize(right));
+	  setSize(curr, (getSize(curr) + getSize(right)));
 
 	  //relink the free list
 	  FreeObject * curr_obj = (FreeObject *) curr;
