@@ -187,11 +187,8 @@ static void * allocateObject(size_t size)
   }
 
   //handle the case that the list doesn't have enough memory
-  if(flag){
-	  FreeObject * newFromOS =  getNewChunk(size);
-	  p->free_list_node._next = newFromOS;
-	  newFromOS->free_list_node._prev = p;
-  }
+  if(flag)
+	  return getNewChunk(size);
 
   pthread_mutex_unlock(&mutex);
   return (void *)((BoundaryTag *)p + 1);
