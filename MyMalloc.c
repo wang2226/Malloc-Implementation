@@ -191,8 +191,8 @@ static void * allocateObject(size_t size)
 	  FreeObject * fromOS =  getNewChunk(size);
 	  fromOS->free_list_node._prev = _freeList;
 	  fromOS->free_list_node._next = _freeList->free_list_node._next;
-	  _freeList->free_list_node._next = fromOS;
 	  _freeList->free_list_node._next->free_list_node._prev = fromOS;
+	  _freeList->free_list_node._next = fromOS;
   }
 
   pthread_mutex_unlock(&mutex);
