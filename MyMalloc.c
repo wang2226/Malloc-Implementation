@@ -192,7 +192,7 @@ static void * allocateObject(size_t size)
 	  p->free_list_node._next = fromOS;
 	  _freeList->free_list_node._prev = fromOS;
 	  fromOS->free_list_node._prev = p;
-	  fromOS->free_list_node._next = _freeList
+	  fromOS->free_list_node._next = _freeList;
   }
 
   pthread_mutex_unlock(&mutex);
