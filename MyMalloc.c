@@ -122,8 +122,7 @@ static void * allocateObject(size_t size)
   if(size <= 0)
 	  return NULL;
 
-  //check for maximum allocation
-  if(size > ARENA_SIZE - 3 * sizeof(BoundaryTag)){
+  if(size > ARENA_SIZE){
 	  errno = ENOMEM;
 	  return NULL;
   }
@@ -133,6 +132,11 @@ static void * allocateObject(size_t size)
 
   //add the size of the block's header
   size_t real_size = round_size + sizeof(BoundaryTag);
+
+  if(real_size > ARENA_SIZE - 3 * sizeof(BoundaryTag)){
+	  errno = ENOMEM;
+	  return NULL;
+  }
 
   FreeObject * p = _freeList->free_list_node._next;
 
