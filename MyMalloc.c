@@ -134,7 +134,7 @@ static void * allocateObject(size_t size)
   size_t real_size = round_size + sizeof(BoundaryTag);
 
   if(real_size < sizeof(FreeObject)){
-	  real_szie = sizeof(FreeObject);
+	  real_size = sizeof(FreeObject);
   }
 
   if(real_size > ARENA_SIZE - 3 * sizeof(BoundaryTag)){
