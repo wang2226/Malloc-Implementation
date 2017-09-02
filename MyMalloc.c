@@ -119,6 +119,15 @@ static void * allocateObject(size_t size)
   if (!_initialized)
     initialize();
 
+  if(size <= 0)
+	  return NULL;
+
+  //check for maximum allocation
+  if(roundSize > ARENA_SIZE - 3 * sizeof(BoundaryTag)){
+	  errno = ENOMEM;
+	  return NULL;
+  }
+
   //round up the requested size to the next 8 byte boundary
   size_t round_size = (size + 8 - 1) & ~(8 - 1);
 
@@ -138,7 +147,9 @@ static void * allocateObject(size_t size)
 	size_t obj_size = getSize(&(p->boundary_tag));
 
 	//the block is not large enough to be split, simply remove the block from the list and return it
-	if((obj_size >= real_size) && (obj_size < (real_size + sizeof(FreeObject) + 8))){
+	if((obj_size >= real_size) && (obj_size < (real_size + 2 * sizeof(BoundaryTag)))){
+		setSize(&(p->boundary_tag), (obj_size - real_size));
+
 		//set the last bit of _objectSizeAndAlloc
 		setAllocated(&(p->boundary_tag),1);
 
@@ -150,13 +161,14 @@ static void * allocateObject(size_t size)
 	}
 
 	//the block needs to be split in two
-	else if(obj_size >= (real_size + sizeof(FreeObject) + 8)){
+	else if(obj_size >= (real_size + 2 * sizeof(BoundaryTag))){
 
 //printf("obj size = %u, real Size = %u\n", obj_size, real_size);
 //fflush(stdout);
 
-		//update the current block size
+		//update the current block size and set flag
 		setSize(&(p->boundary_tag),(obj_size - real_size));
+		setAllocated(&(p->boundary_tag),1);
 
 		//set a pointer to where to split
 		char * temp = (char *)p + obj_size - real_size;
@@ -188,11 +200,39 @@ static void * allocateObject(size_t size)
 
   //handle the case that the list doesn't have enough memory
   if(flag){
-	  FreeObject * fromOS =  getNewChunk(size);
-	  fromOS->free_list_node._prev = _freeList;
-	  fromOS->free_list_node._next = _freeList->free_list_node._next;
-	  _freeList->free_list_node._next->free_list_node._prev = fromOS;
-	  _freeList->free_list_node._next = fromOS;
+	  p = getNewChunk(ARENA_SIZE);
+
+	  //initialize the list to point to the first chunk
+	  setSize(&p->boundary_tag, ARENA_SIZE - 2 * sizeof(BoundaryTag));
+	  p->boundary_tag._leftObjectSize = 0;
+	  setAllocated(&p->boundary_tag,0);
+
+	  //link list pointer hookups
+	  p->free_list_node._next = _freeList->free_list_node._next;
+	  p->free_list_node._prev = _freeList; 
+	  _freeList->free_list_node._next->free_list_node._prev = p;
+	  _freeList->free_list_node._next = p;
+
+	  //update the current block size
+	  size_t obj_size = getSize(&p->boundary_tag);
+	  setSize(&(p->boundary_tag), (obj_size - real_size));
+
+	  //set a pointer to where to split
+	  char * temp = (char *)p + obj_size - real_size;
+
+	  //new boundary tag
+	  //update the size, left object size and allocated bit of newTag
+	  BoundaryTag * newChunk = (BoundaryTag *)temp;
+      setSize(newChunk,real_size);
+	  newChunk->_leftObjectSize = getSize(&(p->boundary_tag));
+	  setAllocated(newChunk,1);
+
+	  //update newChunk's next's _leftObjSize
+      temp = temp + real_size;
+	  BoundaryTag * rightHeader = (BoundaryTag *)temp;
+	  rightHeader->_leftObjectSize = getSize(newChunk);
+
+	  p = (FreeObject *)newChunk;
   }
 
   pthread_mutex_unlock(&mutex);
