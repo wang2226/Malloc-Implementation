@@ -123,7 +123,7 @@ static void * allocateObject(size_t size)
 	  return NULL;
 
   //check for maximum allocation
-  if(round_Size > ARENA_SIZE - 3 * sizeof(BoundaryTag)){
+  if(size > ARENA_SIZE - 3 * sizeof(BoundaryTag)){
 	  errno = ENOMEM;
 	  return NULL;
   }
