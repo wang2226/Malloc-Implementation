@@ -142,10 +142,14 @@ static void * allocateObject(size_t size)
 	  return NULL;
   }
 
-  FreeObject * p = _freeList->free_list_node._next;
-
   //flag to signal that the list doesn't have enought memory
   int flag = 0;
+
+  FreeObject * p = _freeList->free_list_node._next;
+
+  if(p == _freeList){
+	  flag = 1;
+  }
 
   //traverse the free list from the beginning
   while(p != _freeList){
