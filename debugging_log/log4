@@ -1,0 +1,160 @@
+Sat Aug 26 20:41:18 EDT 2017
++run
+Starting program: /home/u89/wang2226/cs252/lab1-src/test1 
+
+Program received signal SIGSEGV, Segmentation fault.
+0x0000000000400c0b in allocateObject (size=15) at MyMalloc.c:162
+162			setSize(newChunk,real_size);
++where
+#0  0x0000000000400c0b in allocateObject (size=15) at MyMalloc.c:162
+#1  0x0000000000401170 in malloc (size=15) at MyMalloc.c:338
+#2  0x00000000004008fb in main () at test1.c:13
++b 162
+Breakpoint 1 at 0x400c07: file MyMalloc.c, line 162.
++run
+Starting program: /home/u89/wang2226/cs252/lab1-src/test1 
+
+Breakpoint 1, allocateObject (size=1024) at MyMalloc.c:162
+162			setSize(newChunk,real_size);
++p real_size
+$1 = 1040
++p size
+$2 = 1024
++p round_size
+$3 = 1024
++p sizeof(BoundaryTag)
+$4 = 16
++p newChunk
+$5 = (BoundaryTag *) 0x802be0
++p newChunk->_objectSizeAndAlloc
+$6 = 0
++p getSize(newChunk)
+No symbol "getSize" in current context.
++s
+163			newChunk->_leftObjectSize = getSize(&(p->boundary_tag));
++s
+164			setAllocated(newChunk,1);
++p newChunk->_objectSizeAndAlloc
+$7 = 1040
++s
+167			temp = temp + real_size;
++p newChunk->_objectSizeAndAlloc
+$8 = 1041
++p newChunk->_objectSizeAndAlloc
+$9 = 1041
++p obj_size
+$10 = 2097120
++p real_size
+$11 = 1040
++s
+168			BoundaryTag * rightHeader = (BoundaryTag *)temp;
++where
+#0  allocateObject (size=1024) at MyMalloc.c:168
+#1  0x0000000000401170 in malloc (size=1024) at MyMalloc.c:338
+#2  0x00007ffff7a7a1d5 in __GI__IO_file_doallocate (fp=0x7ffff7dd2620 <_IO_2_1_stdout_>) at filedoalloc.c:127
+#3  0x00007ffff7a88594 in __GI__IO_doallocbuf (fp=fp@entry=0x7ffff7dd2620 <_IO_2_1_stdout_>) at genops.c:398
+#4  0x00007ffff7a878f8 in _IO_new_file_overflow (f=0x7ffff7dd2620 <_IO_2_1_stdout_>, ch=-1) at fileops.c:820
+#5  0x00007ffff7a8628d in _IO_new_file_xsputn (f=0x7ffff7dd2620 <_IO_2_1_stdout_>, data=0x40136c, n=23) at fileops.c:1331
+#6  0x00007ffff7a7c738 in _IO_puts (str=0x40136c "\n---- Running test1 ---") at ioputs.c:40
+#7  0x00000000004008e8 in main () at test1.c:8
++s
+169			rightHeader->_leftObjectSize = getSize(newChunk);
++p rightHeader 
+$12 = (BoundaryTag *) 0x802ff0
++p temp
+$13 = 0x802ff0 "\001"
++p $temp
+$14 = void
++s
+171			p = (FreeObject *)newChunk;
++p rightHeader->_leftObjectSize
+$15 = 1040
++s
+172			break;
++s
+185	  if(flag)
++p sizeof(BoundaryTag)
+$16 = 16
++p sizeof(FreeListNode)
+$17 = 16
++p real_size
+$18 = 1040
++p obj_size
+No symbol "obj_size" in current context.
++where
+#0  allocateObject (size=1024) at MyMalloc.c:185
+#1  0x0000000000401170 in malloc (size=1024) at MyMalloc.c:338
+#2  0x00007ffff7a7a1d5 in __GI__IO_file_doallocate (fp=0x7ffff7dd2620 <_IO_2_1_stdout_>) at filedoalloc.c:127
+#3  0x00007ffff7a88594 in __GI__IO_doallocbuf (fp=fp@entry=0x7ffff7dd2620 <_IO_2_1_stdout_>) at genops.c:398
+#4  0x00007ffff7a878f8 in _IO_new_file_overflow (f=0x7ffff7dd2620 <_IO_2_1_stdout_>, ch=-1) at fileops.c:820
+#5  0x00007ffff7a8628d in _IO_new_file_xsputn (f=0x7ffff7dd2620 <_IO_2_1_stdout_>, data=0x40136c, n=23) at fileops.c:1331
+#6  0x00007ffff7a7c738 in _IO_puts (str=0x40136c "\n---- Running test1 ---") at ioputs.c:40
+#7  0x00000000004008e8 in main () at test1.c:8
++s
+188	  pthread_mutex_unlock(&mutex);
++s
+pthread_mutex_unlock (mutex=0x602140 <mutex>) at forward.c:194
+194	forward.c: No such file or directory.
++s
+allocateObject (size=1024) at MyMalloc.c:189
+189	  return (void *)((BoundaryTag *)p + 1);
++n
+190	}
++n
+malloc (size=1024) at MyMalloc.c:339
+339	}
++s
+__GI__IO_file_doallocate (fp=0x7ffff7dd2620 <_IO_2_1_stdout_>) at filedoalloc.c:129
+129	filedoalloc.c: No such file or directory.
++where
+#0  __GI__IO_file_doallocate (fp=0x7ffff7dd2620 <_IO_2_1_stdout_>) at filedoalloc.c:129
+#1  0x00007ffff7a88594 in __GI__IO_doallocbuf (fp=fp@entry=0x7ffff7dd2620 <_IO_2_1_stdout_>) at genops.c:398
+#2  0x00007ffff7a878f8 in _IO_new_file_overflow (f=0x7ffff7dd2620 <_IO_2_1_stdout_>, ch=-1) at fileops.c:820
+#3  0x00007ffff7a8628d in _IO_new_file_xsputn (f=0x7ffff7dd2620 <_IO_2_1_stdout_>, data=0x40136c, n=23) at fileops.c:1331
+#4  0x00007ffff7a7c738 in _IO_puts (str=0x40136c "\n---- Running test1 ---") at ioputs.c:40
+#5  0x00000000004008e8 in main () at test1.c:8
++run
+Starting program: /home/u89/wang2226/cs252/lab1-src/test1 
+
+Breakpoint 1, allocateObject (size=1024) at MyMalloc.c:162
+162			setSize(newChunk,real_size);
++p real_size
+$19 = 1040
++p sizeof(BoundaryTag)
+$20 = 16
++make
++run
+`/home/u89/wang2226/cs252/lab1-src/test1' has changed; re-reading symbols.
+Starting program: /home/u89/wang2226/cs252/lab1-src/test1 
+
+Breakpoint 1, allocateObject (size=1024) at MyMalloc.c:162
+162			setSize(newChunk,real_size);
++info b
+Num     Type           Disp Enb Address            What
+1       breakpoint     keep y   0x0000000000400c07 in allocateObject at MyMalloc.c:162
+	breakpoint already hit 1 time
++d 1
++run
+Starting program: /home/u89/wang2226/cs252/lab1-src/test1 
+
+Program received signal SIGSEGV, Segmentation fault.
+0x0000000000400c0b in allocateObject (size=15) at MyMalloc.c:162
+162			setSize(newChunk,real_size);
++b allocateObject (size=15)
+Function "allocateObject (size=15)" not defined.
+Breakpoint 2 (allocateObject (size=15)) pending.
++b allocateObject 
+Breakpoint 3 at 0x400afd: file MyMalloc.c, line 119.
++info b
+Num     Type           Disp Enb Address            What
+2       breakpoint     keep y   <PENDING>          allocateObject (size=15)
+3       breakpoint     keep y   0x0000000000400afd in allocateObject at MyMalloc.c:119
++d 2
++d 3
++run
+Starting program: /home/u89/wang2226/cs252/lab1-src/test1 
+
+Program received signal SIGSEGV, Segmentation fault.
+0x0000000000400c0b in allocateObject (size=15) at MyMalloc.c:162
+162			setSize(newChunk,real_size);
++quit

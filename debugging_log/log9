@@ -1,0 +1,347 @@
+Sat Aug 26 22:40:25 EDT 2017
++run
+Starting program: /home/u89/wang2226/cs252/lab1-src/test1 
+
+Program received signal SIGSEGV, Segmentation fault.
+0x0000000000400c0b in allocateObject (size=15) at MyMalloc.c:164
+164			setSize(newChunk,real_size);
++make
++run
+`/home/u89/wang2226/cs252/lab1-src/test1' has changed; re-reading symbols.
+Starting program: /home/u89/wang2226/cs252/lab1-src/test1 
+
+Program received signal SIGSEGV, Segmentation fault.
+0x0000000000400b79 in allocateObject (size=<error reading variable: Cannot access memory at address 0x7fffff7fefc8>)
+    at MyMalloc.c:117
+117	{
++list
+112	 *
+113	 * @return pointer to the first usable byte in memory for the requesting
+114	 * program
+115	 */
+116	static void * allocateObject(size_t size)
+117	{
+118	  // Make sure that allocator is initialized
+119	  if (!_initialized)
+120	    initialize();
+121	
++where
+#0  0x0000000000400b79 in allocateObject (size=<error reading variable: Cannot access memory at address 0x7fffff7fefc8>)
+    at MyMalloc.c:117
+#1  0x0000000000401219 in malloc (size=1024) at MyMalloc.c:340
+#2  0x00007ffff7a7a1d5 in __GI__IO_file_doallocate (fp=0x7ffff7dd2620 <_IO_2_1_stdout_>) at filedoalloc.c:127
+#3  0x00007ffff7a88594 in __GI__IO_doallocbuf (fp=fp@entry=0x7ffff7dd2620 <_IO_2_1_stdout_>) at genops.c:398
+#4  0x00007ffff7a878f8 in _IO_new_file_overflow (f=0x7ffff7dd2620 <_IO_2_1_stdout_>, ch=-1) at fileops.c:820
+#5  0x00007ffff7a8628d in _IO_new_file_xsputn (f=0x7ffff7dd2620 <_IO_2_1_stdout_>, data=0x401428, n=11) at fileops.c:1331
+#6  0x00007ffff7a5a241 in _IO_vfprintf_internal (s=0x7ffff7dd2620 <_IO_2_1_stdout_>, 
+    format=0x401428 "obj size = %u, real Size = %u\n", ap=ap@entry=0x7fffff7ff6f8) at vfprintf.c:1320
+#7  0x00007ffff7a62899 in __printf (format=<optimized out>) at printf.c:33
+#8  0x0000000000400c64 in allocateObject (size=1024) at MyMalloc.c:154
+#9  0x0000000000401219 in malloc (size=1024) at MyMalloc.c:340
+#10 0x00007ffff7a7a1d5 in __GI__IO_file_doallocate (fp=0x7ffff7dd2620 <_IO_2_1_stdout_>) at filedoalloc.c:127
+#11 0x00007ffff7a88594 in __GI__IO_doallocbuf (fp=fp@entry=0x7ffff7dd2620 <_IO_2_1_stdout_>) at genops.c:398
+#12 0x00007ffff7a878f8 in _IO_new_file_overflow (f=0x7ffff7dd2620 <_IO_2_1_stdout_>, ch=-1) at fileops.c:820
+#13 0x00007ffff7a8628d in _IO_new_file_xsputn (f=0x7ffff7dd2620 <_IO_2_1_stdout_>, data=0x401428, n=11) at fileops.c:1331
+#14 0x00007ffff7a5a241 in _IO_vfprintf_internal (s=0x7ffff7dd2620 <_IO_2_1_stdout_>, 
+    format=0x401428 "obj size = %u, real Size = %u\n", ap=ap@entry=0x7fffff7fff08) at vfprintf.c:1320
+#15 0x00007ffff7a62899 in __printf (format=<optimized out>) at printf.c:33
+#16 0x0000000000400c64 in allocateObject (size=1024) at MyMalloc.c:154
+#17 0x0000000000401219 in malloc (size=1024) at MyMalloc.c:340
+#18 0x00007ffff7a7a1d5 in __GI__IO_file_doallocate (fp=0x7ffff7dd2620 <_IO_2_1_stdout_>) at filedoalloc.c:127
+#19 0x00007ffff7a88594 in __GI__IO_doallocbuf (fp=fp@entry=0x7ffff7dd2620 <_IO_2_1_stdout_>) at genops.c:398
+#20 0x00007ffff7a878f8 in _IO_new_file_overflow (f=0x7ffff7dd2620 <_IO_2_1_stdout_>, ch=-1) at fileops.c:820
+#21 0x00007ffff7a8628d in _IO_new_file_xsputn (f=0x7ffff7dd2620 <_IO_2_1_stdout_>, data=0x401428, n=11) at fileops.c:1331
+#22 0x00007ffff7a5a241 in _IO_vfprintf_internal (s=0x7ffff7dd2620 <_IO_2_1_stdout_>, 
+    format=0x401428 "obj size = %u, real Size = %u\n", ap=ap@entry=0x7fffff800718) at vfprintf.c:1320
+#23 0x00007ffff7a62899 in __printf (format=<optimized out>) at printf.c:33
+#24 0x0000000000400c64 in allocateObject (size=1024) at MyMalloc.c:154
+#25 0x0000000000401219 in malloc (size=1024) at MyMalloc.c:340
+#26 0x00007ffff7a7a1d5 in __GI__IO_file_doallocate (fp=0x7ffff7dd2620 <_IO_2_1_stdout_>) at filedoalloc.c:127
+#27 0x00007ffff7a88594 in __GI__IO_doallocbuf (fp=fp@entry=0x7ffff7dd2620 <_IO_2_1_stdout_>) at genops.c:398
+#28 0x00007ffff7a878f8 in _IO_new_file_overflow (f=0x7ffff7dd2620 <_IO_2_1_stdout_>, ch=-1) at fileops.c:820
+#29 0x00007ffff7a8628d in _IO_new_file_xsputn (f=0x7ffff7dd2620 <_IO_2_1_stdout_>, data=0x401428, n=11) at fileops.c:1331
+#30 0x00007ffff7a5a241 in _IO_vfprintf_internal (s=0x7ffff7dd2620 <_IO_2_1_stdout_>, 
+    format=0x401428 "obj size = %u, real Size = %u\n", ap=ap@entry=0x7fffff800f28) at vfprintf.c:1320
+#31 0x00007ffff7a62899 in __printf (format=<optimized out>) at printf.c:33
+#32 0x0000000000400c64 in allocateObject (size=1024) at MyMalloc.c:154
+#33 0x0000000000401219 in malloc (size=1024) at MyMalloc.c:340
+#34 0x00007ffff7a7a1d5 in __GI__IO_file_doallocate (fp=0x7ffff7dd2620 <_IO_2_1_stdout_>) at filedoalloc.c:127
+#35 0x00007ffff7a88594 in __GI__IO_doallocbuf (fp=fp@entry=0x7ffff7dd2620 <_IO_2_1_stdout_>) at genops.c:398
+#36 0x00007ffff7a878f8 in _IO_new_file_overflow (f=0x7ffff7dd2620 <_IO_2_1_stdout_>, ch=-1) at fileops.c:820
+#37 0x00007ffff7a8628d in _IO_new_file_xsputn (f=0x7ffff7dd2620 <_IO_2_1_stdout_>, data=0x401428, n=11) at fileops.c:1331
+#38 0x00007ffff7a5a241 in _IO_vfprintf_internal (s=0x7ffff7dd2620 <_IO_2_1_stdout_>, 
+    format=0x401428 "obj size = %u, real Size = %u\n", ap=ap@entry=0x7fffff801738) at vfprintf.c:1320
+#39 0x00007ffff7a62899 in __printf (format=<optimized out>) at printf.c:33
+#40 0x0000000000400c64 in allocateObject (size=1024) at MyMalloc.c:154
+#41 0x0000000000401219 in malloc (size=1024) at MyMalloc.c:340
+#42 0x00007ffff7a7a1d5 in __GI__IO_file_doallocate (fp=0x7ffff7dd2620 <_IO_2_1_stdout_>) at filedoalloc.c:127
+#43 0x00007ffff7a88594 in __GI__IO_doallocbuf (fp=fp@entry=0x7ffff7dd2620 <_IO_2_1_stdout_>) at genops.c:398
+#44 0x00007ffff7a878f8 in _IO_new_file_overflow (f=0x7ffff7dd2620 <_IO_2_1_stdout_>, ch=-1) at fileops.c:820
+#45 0x00007ffff7a8628d in _IO_new_file_xsputn (f=0x7ffff7dd2620 <_IO_2_1_stdout_>, data=0x401428, n=11) at fileops.c:1331
+#46 0x00007ffff7a5a241 in _IO_vfprintf_internal (s=0x7ffff7dd2620 <_IO_2_1_stdout_>, 
+    format=0x401428 "obj size = %u, real Size = %u\n", ap=ap@entry=0x7fffff801f48) at vfprintf.c:1320
+#47 0x00007ffff7a62899 in __printf (format=<optimized out>) at printf.c:33
+#48 0x0000000000400c64 in allocateObject (size=1024) at MyMalloc.c:154
+#49 0x0000000000401219 in malloc (size=1024) at MyMalloc.c:340
+#50 0x00007ffff7a7a1d5 in __GI__IO_file_doallocate (fp=0x7ffff7dd2620 <_IO_2_1_stdout_>) at filedoalloc.c:127
+#51 0x00007ffff7a88594 in __GI__IO_doallocbuf (fp=fp@entry=0x7ffff7dd2620 <_IO_2_1_stdout_>) at genops.c:398
+#52 0x00007ffff7a878f8 in _IO_new_file_overflow (f=0x7ffff7dd2620 <_IO_2_1_stdout_>, ch=-1) at fileops.c:820
+#53 0x00007ffff7a8628d in _IO_new_file_xsputn (f=0x7ffff7dd2620 <_IO_2_1_stdout_>, data=0x401428, n=11) at fileops.c:1331
+#54 0x00007ffff7a5a241 in _IO_vfprintf_internal (s=0x7ffff7dd2620 <_IO_2_1_stdout_>, 
+    format=0x401428 "obj size = %u, real Size = %u\n", ap=ap@entry=0x7fffff802758) at vfprintf.c:1320
+Quit
++run
+Starting program: /home/u89/wang2226/cs252/lab1-src/test1 
+
+Program received signal SIGSEGV, Segmentation fault.
+0x0000000000400b79 in allocateObject (size=<error reading variable: Cannot access memory at address 0x7fffff7fefc8>)
+    at MyMalloc.c:117
+117	{
++where
+#0  0x0000000000400b79 in allocateObject (size=<error reading variable: Cannot access memory at address 0x7fffff7fefc8>)
+    at MyMalloc.c:117
+#1  0x0000000000401219 in malloc (size=1024) at MyMalloc.c:340
+#2  0x00007ffff7a7a1d5 in __GI__IO_file_doallocate (fp=0x7ffff7dd2620 <_IO_2_1_stdout_>) at filedoalloc.c:127
+#3  0x00007ffff7a88594 in __GI__IO_doallocbuf (fp=fp@entry=0x7ffff7dd2620 <_IO_2_1_stdout_>) at genops.c:398
+#4  0x00007ffff7a878f8 in _IO_new_file_overflow (f=0x7ffff7dd2620 <_IO_2_1_stdout_>, ch=-1) at fileops.c:820
+#5  0x00007ffff7a8628d in _IO_new_file_xsputn (f=0x7ffff7dd2620 <_IO_2_1_stdout_>, data=0x401428, n=11) at fileops.c:1331
+#6  0x00007ffff7a5a241 in _IO_vfprintf_internal (s=0x7ffff7dd2620 <_IO_2_1_stdout_>, 
+    format=0x401428 "obj size = %u, real Size = %u\n", ap=ap@entry=0x7fffff7ff6f8) at vfprintf.c:1320
+#7  0x00007ffff7a62899 in __printf (format=<optimized out>) at printf.c:33
+#8  0x0000000000400c64 in allocateObject (size=1024) at MyMalloc.c:154
+#9  0x0000000000401219 in malloc (size=1024) at MyMalloc.c:340
+#10 0x00007ffff7a7a1d5 in __GI__IO_file_doallocate (fp=0x7ffff7dd2620 <_IO_2_1_stdout_>) at filedoalloc.c:127
+#11 0x00007ffff7a88594 in __GI__IO_doallocbuf (fp=fp@entry=0x7ffff7dd2620 <_IO_2_1_stdout_>) at genops.c:398
+#12 0x00007ffff7a878f8 in _IO_new_file_overflow (f=0x7ffff7dd2620 <_IO_2_1_stdout_>, ch=-1) at fileops.c:820
+#13 0x00007ffff7a8628d in _IO_new_file_xsputn (f=0x7ffff7dd2620 <_IO_2_1_stdout_>, data=0x401428, n=11) at fileops.c:1331
+#14 0x00007ffff7a5a241 in _IO_vfprintf_internal (s=0x7ffff7dd2620 <_IO_2_1_stdout_>, 
+    format=0x401428 "obj size = %u, real Size = %u\n", ap=ap@entry=0x7fffff7fff08) at vfprintf.c:1320
+#15 0x00007ffff7a62899 in __printf (format=<optimized out>) at printf.c:33
+#16 0x0000000000400c64 in allocateObject (size=1024) at MyMalloc.c:154
+#17 0x0000000000401219 in malloc (size=1024) at MyMalloc.c:340
+#18 0x00007ffff7a7a1d5 in __GI__IO_file_doallocate (fp=0x7ffff7dd2620 <_IO_2_1_stdout_>) at filedoalloc.c:127
+#19 0x00007ffff7a88594 in __GI__IO_doallocbuf (fp=fp@entry=0x7ffff7dd2620 <_IO_2_1_stdout_>) at genops.c:398
+#20 0x00007ffff7a878f8 in _IO_new_file_overflow (f=0x7ffff7dd2620 <_IO_2_1_stdout_>, ch=-1) at fileops.c:820
+#21 0x00007ffff7a8628d in _IO_new_file_xsputn (f=0x7ffff7dd2620 <_IO_2_1_stdout_>, data=0x401428, n=11) at fileops.c:1331
+#22 0x00007ffff7a5a241 in _IO_vfprintf_internal (s=0x7ffff7dd2620 <_IO_2_1_stdout_>, 
+    format=0x401428 "obj size = %u, real Size = %u\n", ap=ap@entry=0x7fffff800718) at vfprintf.c:1320
+#23 0x00007ffff7a62899 in __printf (format=<optimized out>) at printf.c:33
+#24 0x0000000000400c64 in allocateObject (size=1024) at MyMalloc.c:154
+#25 0x0000000000401219 in malloc (size=1024) at MyMalloc.c:340
+#26 0x00007ffff7a7a1d5 in __GI__IO_file_doallocate (fp=0x7ffff7dd2620 <_IO_2_1_stdout_>) at filedoalloc.c:127
+Quit
++make
++./test1
+Undefined command: "".  Try "help".
++run
+`/home/u89/wang2226/cs252/lab1-src/test1' has changed; re-reading symbols.
+Starting program: /home/u89/wang2226/cs252/lab1-src/test1 
+
+Program received signal SIGSEGV, Segmentation fault.
+0x0000000000400b79 in allocateObject (size=<error reading variable: Cannot access memory at address 0x7fffff7fefc8>)
+    at MyMalloc.c:117
+117	{
++where
+#0  0x0000000000400b79 in allocateObject (size=<error reading variable: Cannot access memory at address 0x7fffff7fefc8>)
+    at MyMalloc.c:117
+#1  0x0000000000401219 in malloc (size=1024) at MyMalloc.c:340
+#2  0x00007ffff7a7a1d5 in __GI__IO_file_doallocate (fp=0x7ffff7dd2620 <_IO_2_1_stdout_>) at filedoalloc.c:127
+#3  0x00007ffff7a88594 in __GI__IO_doallocbuf (fp=fp@entry=0x7ffff7dd2620 <_IO_2_1_stdout_>) at genops.c:398
+#4  0x00007ffff7a878f8 in _IO_new_file_overflow (f=0x7ffff7dd2620 <_IO_2_1_stdout_>, ch=-1) at fileops.c:820
+#5  0x00007ffff7a8628d in _IO_new_file_xsputn (f=0x7ffff7dd2620 <_IO_2_1_stdout_>, data=0x401428, n=11) at fileops.c:1331
+#6  0x00007ffff7a5a241 in _IO_vfprintf_internal (s=0x7ffff7dd2620 <_IO_2_1_stdout_>, 
+    format=0x401428 "obj size = %u, real Size = %u\n", ap=ap@entry=0x7fffff7ff6f8) at vfprintf.c:1320
+#7  0x00007ffff7a62899 in __printf (format=<optimized out>) at printf.c:33
+#8  0x0000000000400c64 in allocateObject (size=1024) at MyMalloc.c:154
+#9  0x0000000000401219 in malloc (size=1024) at MyMalloc.c:340
+#10 0x00007ffff7a7a1d5 in __GI__IO_file_doallocate (fp=0x7ffff7dd2620 <_IO_2_1_stdout_>) at filedoalloc.c:127
+#11 0x00007ffff7a88594 in __GI__IO_doallocbuf (fp=fp@entry=0x7ffff7dd2620 <_IO_2_1_stdout_>) at genops.c:398
+#12 0x00007ffff7a878f8 in _IO_new_file_overflow (f=0x7ffff7dd2620 <_IO_2_1_stdout_>, ch=-1) at fileops.c:820
+#13 0x00007ffff7a8628d in _IO_new_file_xsputn (f=0x7ffff7dd2620 <_IO_2_1_stdout_>, data=0x401428, n=11) at fileops.c:1331
+#14 0x00007ffff7a5a241 in _IO_vfprintf_internal (s=0x7ffff7dd2620 <_IO_2_1_stdout_>, 
+    format=0x401428 "obj size = %u, real Size = %u\n", ap=ap@entry=0x7fffff7fff08) at vfprintf.c:1320
+#15 0x00007ffff7a62899 in __printf (format=<optimized out>) at printf.c:33
+#16 0x0000000000400c64 in allocateObject (size=1024) at MyMalloc.c:154
+#17 0x0000000000401219 in malloc (size=1024) at MyMalloc.c:340
+#18 0x00007ffff7a7a1d5 in __GI__IO_file_doallocate (fp=0x7ffff7dd2620 <_IO_2_1_stdout_>) at filedoalloc.c:127
+#19 0x00007ffff7a88594 in __GI__IO_doallocbuf (fp=fp@entry=0x7ffff7dd2620 <_IO_2_1_stdout_>) at genops.c:398
+#20 0x00007ffff7a878f8 in _IO_new_file_overflow (f=0x7ffff7dd2620 <_IO_2_1_stdout_>, ch=-1) at fileops.c:820
+#21 0x00007ffff7a8628d in _IO_new_file_xsputn (f=0x7ffff7dd2620 <_IO_2_1_stdout_>, data=0x401428, n=11) at fileops.c:1331
+#22 0x00007ffff7a5a241 in _IO_vfprintf_internal (s=0x7ffff7dd2620 <_IO_2_1_stdout_>, 
+    format=0x401428 "obj size = %u, real Size = %u\n", ap=ap@entry=0x7fffff800718) at vfprintf.c:1320
+#23 0x00007ffff7a62899 in __printf (format=<optimized out>) at printf.c:33
+#24 0x0000000000400c64 in allocateObject (size=1024) at MyMalloc.c:154
+#25 0x0000000000401219 in malloc (size=1024) at MyMalloc.c:340
+#26 0x00007ffff7a7a1d5 in __GI__IO_file_doallocate (fp=0x7ffff7dd2620 <_IO_2_1_stdout_>) at filedoalloc.c:127
+#27 0x00007ffff7a88594 in __GI__IO_doallocbuf (fp=fp@entry=0x7ffff7dd2620 <_IO_2_1_stdout_>) at genops.c:398
+#28 0x00007ffff7a878f8 in _IO_new_file_overflow (f=0x7ffff7dd2620 <_IO_2_1_stdout_>, ch=-1) at fileops.c:820
+#29 0x00007ffff7a8628d in _IO_new_file_xsputn (f=0x7ffff7dd2620 <_IO_2_1_stdout_>, data=0x401428, n=11) at fileops.c:1331
+#30 0x00007ffff7a5a241 in _IO_vfprintf_internal (s=0x7ffff7dd2620 <_IO_2_1_stdout_>, 
+    format=0x401428 "obj size = %u, real Size = %u\n", ap=ap@entry=0x7fffff800f28) at vfprintf.c:1320
+#31 0x00007ffff7a62899 in __printf (format=<optimized out>) at printf.c:33
+#32 0x0000000000400c64 in allocateObject (size=1024) at MyMalloc.c:154
+#33 0x0000000000401219 in malloc (size=1024) at MyMalloc.c:340
+#34 0x00007ffff7a7a1d5 in __GI__IO_file_doallocate (fp=0x7ffff7dd2620 <_IO_2_1_stdout_>) at filedoalloc.c:127
+#35 0x00007ffff7a88594 in __GI__IO_doallocbuf (fp=fp@entry=0x7ffff7dd2620 <_IO_2_1_stdout_>) at genops.c:398
+#36 0x00007ffff7a878f8 in _IO_new_file_overflow (f=0x7ffff7dd2620 <_IO_2_1_stdout_>, ch=-1) at fileops.c:820
+#37 0x00007ffff7a8628d in _IO_new_file_xsputn (f=0x7ffff7dd2620 <_IO_2_1_stdout_>, data=0x401428, n=11) at fileops.c:1331
+#38 0x00007ffff7a5a241 in _IO_vfprintf_internal (s=0x7ffff7dd2620 <_IO_2_1_stdout_>, 
+    format=0x401428 "obj size = %u, real Size = %u\n", ap=ap@entry=0x7fffff801738) at vfprintf.c:1320
+#39 0x00007ffff7a62899 in __printf (format=<optimized out>) at printf.c:33
+#40 0x0000000000400c64 in allocateObject (size=1024) at MyMalloc.c:154
+#41 0x0000000000401219 in malloc (size=1024) at MyMalloc.c:340
+#42 0x00007ffff7a7a1d5 in __GI__IO_file_doallocate (fp=0x7ffff7dd2620 <_IO_2_1_stdout_>) at filedoalloc.c:127
+#43 0x00007ffff7a88594 in __GI__IO_doallocbuf (fp=fp@entry=0x7ffff7dd2620 <_IO_2_1_stdout_>) at genops.c:398
+#44 0x00007ffff7a878f8 in _IO_new_file_overflow (f=0x7ffff7dd2620 <_IO_2_1_stdout_>, ch=-1) at fileops.c:820
+#45 0x00007ffff7a8628d in _IO_new_file_xsputn (f=0x7ffff7dd2620 <_IO_2_1_stdout_>, data=0x401428, n=11) at fileops.c:1331
+#46 0x00007ffff7a5a241 in _IO_vfprintf_internal (s=0x7ffff7dd2620 <_IO_2_1_stdout_>, 
+    format=0x401428 "obj size = %u, real Size = %u\n", ap=ap@entry=0x7fffff801f48) at vfprintf.c:1320
+#47 0x00007ffff7a62899 in __printf (format=<optimized out>) at printf.c:33
+#48 0x0000000000400c64 in allocateObject (size=1024) at MyMalloc.c:154
+#49 0x0000000000401219 in malloc (size=1024) at MyMalloc.c:340
+#50 0x00007ffff7a7a1d5 in __GI__IO_file_doallocate (fp=0x7ffff7dd2620 <_IO_2_1_stdout_>) at filedoalloc.c:127
+#51 0x00007ffff7a88594 in __GI__IO_doallocbuf (fp=fp@entry=0x7ffff7dd2620 <_IO_2_1_stdout_>) at genops.c:398
+#52 0x00007ffff7a878f8 in _IO_new_file_overflow (f=0x7ffff7dd2620 <_IO_2_1_stdout_>, ch=-1) at fileops.c:820
+#53 0x00007ffff7a8628d in _IO_new_file_xsputn (f=0x7ffff7dd2620 <_IO_2_1_stdout_>, data=0x401428, n=11) at fileops.c:1331
+#54 0x00007ffff7a5a241 in _IO_vfprintf_internal (s=0x7ffff7dd2620 <_IO_2_1_stdout_>, 
+    format=0x401428 "obj size = %u, real Size = %u\n", ap=ap@entry=0x7fffff802758) at vfprintf.c:1320
+#55 0x00007ffff7a62899 in __printf (format=<optimized out>) at printf.c:33
+#56 0x0000000000400c64 in allocateObject (size=1024) at MyMalloc.c:154
+#57 0x0000000000401219 in malloc (size=1024) at MyMalloc.c:340
+#58 0x00007ffff7a7a1d5 in __GI__IO_file_doallocate (fp=0x7ffff7dd2620 <_IO_2_1_stdout_>) at filedoalloc.c:127
+#59 0x00007ffff7a88594 in __GI__IO_doallocbuf (fp=fp@entry=0x7ffff7dd2620 <_IO_2_1_stdout_>) at genops.c:398
+#60 0x00007ffff7a878f8 in _IO_new_file_overflow (f=0x7ffff7dd2620 <_IO_2_1_stdout_>, ch=-1) at fileops.c:820
+#61 0x00007ffff7a8628d in _IO_new_file_xsputn (f=0x7ffff7dd2620 <_IO_2_1_stdout_>, data=0x401428, n=11) at fileops.c:1331
+#62 0x00007ffff7a5a241 in _IO_vfprintf_internal (s=0x7ffff7dd2620 <_IO_2_1_stdout_>, 
+    format=0x401428 "obj size = %u, real Size = %u\n", ap=ap@entry=0x7fffff802f68) at vfprintf.c:1320
+#63 0x00007ffff7a62899 in __printf (format=<optimized out>) at printf.c:33
+#64 0x0000000000400c64 in allocateObject (size=1024) at MyMalloc.c:154
+#65 0x0000000000401219 in malloc (size=1024) at MyMalloc.c:340
+#66 0x00007ffff7a7a1d5 in __GI__IO_file_doallocate (fp=0x7ffff7dd2620 <_IO_2_1_stdout_>) at filedoalloc.c:127
+#67 0x00007ffff7a88594 in __GI__IO_doallocbuf (fp=fp@entry=0x7ffff7dd2620 <_IO_2_1_stdout_>) at genops.c:398
+#68 0x00007ffff7a878f8 in _IO_new_file_overflow (f=0x7ffff7dd2620 <_IO_2_1_stdout_>, ch=-1) at fileops.c:820
+#69 0x00007ffff7a8628d in _IO_new_file_xsputn (f=0x7ffff7dd2620 <_IO_2_1_stdout_>, data=0x401428, n=11) at fileops.c:1331
+#70 0x00007ffff7a5a241 in _IO_vfprintf_internal (s=0x7ffff7dd2620 <_IO_2_1_stdout_>, 
+    format=0x401428 "obj size = %u, real Size = %u\n", ap=ap@entry=0x7fffff803778) at vfprintf.c:1320
+#71 0x00007ffff7a62899 in __printf (format=<optimized out>) at printf.c:33
+#72 0x0000000000400c64 in allocateObject (size=1024) at MyMalloc.c:154
+#73 0x0000000000401219 in malloc (size=1024) at MyMalloc.c:340
+#74 0x00007ffff7a7a1d5 in __GI__IO_file_doallocate (fp=0x7ffff7dd2620 <_IO_2_1_stdout_>) at filedoalloc.c:127
+#75 0x00007ffff7a88594 in __GI__IO_doallocbuf (fp=fp@entry=0x7ffff7dd2620 <_IO_2_1_stdout_>) at genops.c:398
+#76 0x00007ffff7a878f8 in _IO_new_file_overflow (f=0x7ffff7dd2620 <_IO_2_1_stdout_>, ch=-1) at fileops.c:820
+#77 0x00007ffff7a8628d in _IO_new_file_xsputn (f=0x7ffff7dd2620 <_IO_2_1_stdout_>, data=0x401428, n=11) at fileops.c:1331
+#78 0x00007ffff7a5a241 in _IO_vfprintf_internal (s=0x7ffff7dd2620 <_IO_2_1_stdout_>, 
+    format=0x401428 "obj size = %u, real Size = %u\n", ap=ap@entry=0x7fffff803f88) at vfprintf.c:1320
+#79 0x00007ffff7a62899 in __printf (format=<optimized out>) at printf.c:33
+#80 0x0000000000400c64 in allocateObject (size=1024) at MyMalloc.c:154
+#81 0x0000000000401219 in malloc (size=1024) at MyMalloc.c:340
+#82 0x00007ffff7a7a1d5 in __GI__IO_file_doallocate (fp=0x7ffff7dd2620 <_IO_2_1_stdout_>) at filedoalloc.c:127
+#83 0x00007ffff7a88594 in __GI__IO_doallocbuf (fp=fp@entry=0x7ffff7dd2620 <_IO_2_1_stdout_>) at genops.c:398
+#84 0x00007ffff7a878f8 in _IO_new_file_overflow (f=0x7ffff7dd2620 <_IO_2_1_stdout_>, ch=-1) at fileops.c:820
+#85 0x00007ffff7a8628d in _IO_new_file_xsputn (f=0x7ffff7dd2620 <_IO_2_1_stdout_>, data=0x401428, n=11) at fileops.c:1331
+#86 0x00007ffff7a5a241 in _IO_vfprintf_internal (s=0x7ffff7dd2620 <_IO_2_1_stdout_>, 
+    format=0x401428 "obj size = %u, real Size = %u\n", ap=ap@entry=0x7fffff804798) at vfprintf.c:1320
+#87 0x00007ffff7a62899 in __printf (format=<optimized out>) at printf.c:33
+#88 0x0000000000400c64 in allocateObject (size=1024) at MyMalloc.c:154
+#89 0x0000000000401219 in malloc (size=1024) at MyMalloc.c:340
+#90 0x00007ffff7a7a1d5 in __GI__IO_file_doallocate (fp=0x7ffff7dd2620 <_IO_2_1_stdout_>) at filedoalloc.c:127
+#91 0x00007ffff7a88594 in __GI__IO_doallocbuf (fp=fp@entry=0x7ffff7dd2620 <_IO_2_1_stdout_>) at genops.c:398
+#92 0x00007ffff7a878f8 in _IO_new_file_overflow (f=0x7ffff7dd2620 <_IO_2_1_stdout_>, ch=-1) at fileops.c:820
+#93 0x00007ffff7a8628d in _IO_new_file_xsputn (f=0x7ffff7dd2620 <_IO_2_1_stdout_>, data=0x401428, n=11) at fileops.c:1331
+#94 0x00007ffff7a5a241 in _IO_vfprintf_internal (s=0x7ffff7dd2620 <_IO_2_1_stdout_>, 
+    format=0x401428 "obj size = %u, real Size = %u\n", ap=ap@entry=0x7fffff804fa8) at vfprintf.c:1320
+#95 0x00007ffff7a62899 in __printf (format=<optimized out>) at printf.c:33
+#96 0x0000000000400c64 in allocateObject (size=1024) at MyMalloc.c:154
+#97 0x0000000000401219 in malloc (size=1024) at MyMalloc.c:340
+#98 0x00007ffff7a7a1d5 in __GI__IO_file_doallocate (fp=0x7ffff7dd2620 <_IO_2_1_stdout_>) at filedoalloc.c:127
+#99 0x00007ffff7a88594 in __GI__IO_doallocbuf (fp=fp@entry=0x7ffff7dd2620 <_IO_2_1_stdout_>) at genops.c:398
+#100 0x00007ffff7a878f8 in _IO_new_file_overflow (f=0x7ffff7dd2620 <_IO_2_1_stdout_>, ch=-1) at fileops.c:820
+#101 0x00007ffff7a8628d in _IO_new_file_xsputn (f=0x7ffff7dd2620 <_IO_2_1_stdout_>, data=0x401428, n=11) at fileops.c:1331
+#102 0x00007ffff7a5a241 in _IO_vfprintf_internal (s=0x7ffff7dd2620 <_IO_2_1_stdout_>, 
+    format=0x401428 "obj size = %u, real Size = %u\n", ap=ap@entry=0x7fffff8057b8) at vfprintf.c:1320
+#103 0x00007ffff7a62899 in __printf (format=<optimized out>) at printf.c:33
+#104 0x0000000000400c64 in allocateObject (size=1024) at MyMalloc.c:154
+#105 0x0000000000401219 in malloc (size=1024) at MyMalloc.c:340
+#106 0x00007ffff7a7a1d5 in __GI__IO_file_doallocate (fp=0x7ffff7dd2620 <_IO_2_1_stdout_>) at filedoalloc.c:127
+#107 0x00007ffff7a88594 in __GI__IO_doallocbuf (fp=fp@entry=0x7ffff7dd2620 <_IO_2_1_stdout_>) at genops.c:398
+#108 0x00007ffff7a878f8 in _IO_new_file_overflow (f=0x7ffff7dd2620 <_IO_2_1_stdout_>, ch=-1) at fileops.c:820
+#109 0x00007ffff7a8628d in _IO_new_file_xsputn (f=0x7ffff7dd2620 <_IO_2_1_stdout_>, data=0x401428, n=11) at fileops.c:1331
+#110 0x00007ffff7a5a241 in _IO_vfprintf_internal (s=0x7ffff7dd2620 <_IO_2_1_stdout_>, 
+    format=0x401428 "obj size = %u, real Size = %u\n", ap=ap@entry=0x7fffff805fc8) at vfprintf.c:1320
+#111 0x00007ffff7a62899 in __printf (format=<optimized out>) at printf.c:33
+#112 0x0000000000400c64 in allocateObject (size=1024) at MyMalloc.c:154
+#113 0x0000000000401219 in malloc (size=1024) at MyMalloc.c:340
+#114 0x00007ffff7a7a1d5 in __GI__IO_file_doallocate (fp=0x7ffff7dd2620 <_IO_2_1_stdout_>) at filedoalloc.c:127
+#115 0x00007ffff7a88594 in __GI__IO_doallocbuf (fp=fp@entry=0x7ffff7dd2620 <_IO_2_1_stdout_>) at genops.c:398
+#116 0x00007ffff7a878f8 in _IO_new_file_overflow (f=0x7ffff7dd2620 <_IO_2_1_stdout_>, ch=-1) at fileops.c:820
+#117 0x00007ffff7a8628d in _IO_new_file_xsputn (f=0x7ffff7dd2620 <_IO_2_1_stdout_>, data=0x401428, n=11) at fileops.c:1331
+#118 0x00007ffff7a5a241 in _IO_vfprintf_internal (s=0x7ffff7dd2620 <_IO_2_1_stdout_>, 
+    format=0x401428 "obj size = %u, real Size = %u\n", ap=ap@entry=0x7fffff8067d8) at vfprintf.c:1320
+#119 0x00007ffff7a62899 in __printf (format=<optimized out>) at printf.c:33
+#120 0x0000000000400c64 in allocateObject (size=1024) at MyMalloc.c:154
+#121 0x0000000000401219 in malloc (size=1024) at MyMalloc.c:340
+#122 0x00007ffff7a7a1d5 in __GI__IO_file_doallocate (fp=0x7ffff7dd2620 <_IO_2_1_stdout_>) at filedoalloc.c:127
+#123 0x00007ffff7a88594 in __GI__IO_doallocbuf (fp=fp@entry=0x7ffff7dd2620 <_IO_2_1_stdout_>) at genops.c:398
+#124 0x00007ffff7a878f8 in _IO_new_file_overflow (f=0x7ffff7dd2620 <_IO_2_1_stdout_>, ch=-1) at fileops.c:820
+#125 0x00007ffff7a8628d in _IO_new_file_xsputn (f=0x7ffff7dd2620 <_IO_2_1_stdout_>, data=0x401428, n=11) at fileops.c:1331
+#126 0x00007ffff7a5a241 in _IO_vfprintf_internal (s=0x7ffff7dd2620 <_IO_2_1_stdout_>, 
+    format=0x401428 "obj size = %u, real Size = %u\n", ap=ap@entry=0x7fffff806fe8) at vfprintf.c:1320
+#127 0x00007ffff7a62899 in __printf (format=<optimized out>) at printf.c:33
+#128 0x0000000000400c64 in allocateObject (size=1024) at MyMalloc.c:154
+#129 0x0000000000401219 in malloc (size=1024) at MyMalloc.c:340
+#130 0x00007ffff7a7a1d5 in __GI__IO_file_doallocate (fp=0x7ffff7dd2620 <_IO_2_1_stdout_>) at filedoalloc.c:127
+#131 0x00007ffff7a88594 in __GI__IO_doallocbuf (fp=fp@entry=0x7ffff7dd2620 <_IO_2_1_stdout_>) at genops.c:398
+#132 0x00007ffff7a878f8 in _IO_new_file_overflow (f=0x7ffff7dd2620 <_IO_2_1_stdout_>, ch=-1) at fileops.c:820
+#133 0x00007ffff7a8628d in _IO_new_file_xsputn (f=0x7ffff7dd2620 <_IO_2_1_stdout_>, data=0x401428, n=11) at fileops.c:1331
+#134 0x00007ffff7a5a241 in _IO_vfprintf_internal (s=0x7ffff7dd2620 <_IO_2_1_stdout_>, 
+    format=0x401428 "obj size = %u, real Size = %u\n", ap=ap@entry=0x7fffff8077f8) at vfprintf.c:1320
+#135 0x00007ffff7a62899 in __printf (format=<optimized out>) at printf.c:33
+#136 0x0000000000400c64 in allocateObject (size=1024) at MyMalloc.c:154
+#137 0x0000000000401219 in malloc (size=1024) at MyMalloc.c:340
+#138 0x00007ffff7a7a1d5 in __GI__IO_file_doallocate (fp=0x7ffff7dd2620 <_IO_2_1_stdout_>) at filedoalloc.c:127
+#139 0x00007ffff7a88594 in __GI__IO_doallocbuf (fp=fp@entry=0x7ffff7dd2620 <_IO_2_1_stdout_>) at genops.c:398
+#140 0x00007ffff7a878f8 in _IO_new_file_overflow (f=0x7ffff7dd2620 <_IO_2_1_stdout_>, ch=-1) at fileops.c:820
+Quit
++make
++run
+`/home/u89/wang2226/cs252/lab1-src/test1' has changed; re-reading symbols.
+Starting program: /home/u89/wang2226/cs252/lab1-src/test1 
+
+Program received signal SIGSEGV, Segmentation fault.
+0x0000000000400b79 in allocateObject (size=<error reading variable: Cannot access memory at address 0x7fffff7fefc8>)
+    at MyMalloc.c:117
+117	{
++where
+#0  0x0000000000400b79 in allocateObject (size=<error reading variable: Cannot access memory at address 0x7fffff7fefc8>)
+    at MyMalloc.c:117
+#1  0x0000000000401219 in malloc (size=1024) at MyMalloc.c:340
+#2  0x00007ffff7a7a1d5 in __GI__IO_file_doallocate (fp=0x7ffff7dd2620 <_IO_2_1_stdout_>) at filedoalloc.c:127
+#3  0x00007ffff7a88594 in __GI__IO_doallocbuf (fp=fp@entry=0x7ffff7dd2620 <_IO_2_1_stdout_>) at genops.c:398
+#4  0x00007ffff7a878f8 in _IO_new_file_overflow (f=0x7ffff7dd2620 <_IO_2_1_stdout_>, ch=-1) at fileops.c:820
+#5  0x00007ffff7a8628d in _IO_new_file_xsputn (f=0x7ffff7dd2620 <_IO_2_1_stdout_>, data=0x401428, n=11) at fileops.c:1331
+#6  0x00007ffff7a5a241 in _IO_vfprintf_internal (s=0x7ffff7dd2620 <_IO_2_1_stdout_>, 
+    format=0x401428 "obj size = %u, real Size = %u\n", ap=ap@entry=0x7fffff7ff6f8) at vfprintf.c:1320
+#7  0x00007ffff7a62899 in __printf (format=<optimized out>) at printf.c:33
+#8  0x0000000000400c64 in allocateObject (size=1024) at MyMalloc.c:154
+#9  0x0000000000401219 in malloc (size=1024) at MyMalloc.c:340
+#10 0x00007ffff7a7a1d5 in __GI__IO_file_doallocate (fp=0x7ffff7dd2620 <_IO_2_1_stdout_>) at filedoalloc.c:127
+#11 0x00007ffff7a88594 in __GI__IO_doallocbuf (fp=fp@entry=0x7ffff7dd2620 <_IO_2_1_stdout_>) at genops.c:398
+#12 0x00007ffff7a878f8 in _IO_new_file_overflow (f=0x7ffff7dd2620 <_IO_2_1_stdout_>, ch=-1) at fileops.c:820
+#13 0x00007ffff7a8628d in _IO_new_file_xsputn (f=0x7ffff7dd2620 <_IO_2_1_stdout_>, data=0x401428, n=11) at fileops.c:1331
+#14 0x00007ffff7a5a241 in _IO_vfprintf_internal (s=0x7ffff7dd2620 <_IO_2_1_stdout_>, 
+    format=0x401428 "obj size = %u, real Size = %u\n", ap=ap@entry=0x7fffff7fff08) at vfprintf.c:1320
+#15 0x00007ffff7a62899 in __printf (format=<optimized out>) at printf.c:33
+#16 0x0000000000400c64 in allocateObject (size=1024) at MyMalloc.c:154
+#17 0x0000000000401219 in malloc (size=1024) at MyMalloc.c:340
+#18 0x00007ffff7a7a1d5 in __GI__IO_file_doallocate (fp=0x7ffff7dd2620 <_IO_2_1_stdout_>) at filedoalloc.c:127
+#19 0x00007ffff7a88594 in __GI__IO_doallocbuf (fp=fp@entry=0x7ffff7dd2620 <_IO_2_1_stdout_>) at genops.c:398
+#20 0x00007ffff7a878f8 in _IO_new_file_overflow (f=0x7ffff7dd2620 <_IO_2_1_stdout_>, ch=-1) at fileops.c:820
+#21 0x00007ffff7a8628d in _IO_new_file_xsputn (f=0x7ffff7dd2620 <_IO_2_1_stdout_>, data=0x401428, n=11) at fileops.c:1331
+#22 0x00007ffff7a5a241 in _IO_vfprintf_internal (s=0x7ffff7dd2620 <_IO_2_1_stdout_>, 
+    format=0x401428 "obj size = %u, real Size = %u\n", ap=ap@entry=0x7fffff800718) at vfprintf.c:1320
+#23 0x00007ffff7a62899 in __printf (format=<optimized out>) at printf.c:33
+#24 0x0000000000400c64 in allocateObject (size=1024) at MyMalloc.c:154
+#25 0x0000000000401219 in malloc (size=1024) at MyMalloc.c:340
+#26 0x00007ffff7a7a1d5 in __GI__IO_file_doallocate (fp=0x7ffff7dd2620 <_IO_2_1_stdout_>) at filedoalloc.c:127
+Quit
++q

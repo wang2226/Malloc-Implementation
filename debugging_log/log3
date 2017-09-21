@@ -1,0 +1,15 @@
+Sat Aug 26 11:18:38 EDT 2017
++run
+Starting program: /home/u89/wang2226/cs252/lab1-src/test1 
+
+Program received signal SIGSEGV, Segmentation fault.
+0x0000000000400c0b in allocateObject (size=15) at MyMalloc.c:162
+162			setSize(&(newChunk->boundary_tag),real_size);
++where
+#0  0x0000000000400c0b in allocateObject (size=15) at MyMalloc.c:162
+#1  0x0000000000401170 in malloc (size=15) at MyMalloc.c:338
+#2  0x00000000004008fb in main () at test1.c:13
++make
++make
++make
++q

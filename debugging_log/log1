@@ -1,0 +1,61 @@
+Thu Aug 24 19:44:03 EDT 2017
++b 13
+Breakpoint 1 at 0x400921: file test1.c, line 13.
++run
+Starting program: /home/u89/wang2226/cs252/lab1-src/test1 
+
+Breakpoint 1, main () at test1.c:13
+13	    char * p1 = (char *) malloc(15 );
++s
+malloc (size=15) at MyMalloc.c:243
+243	  pthread_mutex_lock(&mutex);
++n
+244	  increaseMallocCalls();
++n
+246	  return allocateObject(size);
++n
+247	}
++n
+main () at test1.c:14
+14	    *p1 = 100;
++n
+12	  for ( i = 0; i < allocations; i++ ) {
++n
+
+Breakpoint 1, main () at test1.c:13
+13	    char * p1 = (char *) malloc(15 );
++s
+malloc (size=15) at MyMalloc.c:243
+243	  pthread_mutex_lock(&mutex);
++s
+pthread_mutex_lock (mutex=0x602140 <mutex>) at forward.c:192
+192	forward.c: No such file or directory.
++s
+malloc (size=15) at MyMalloc.c:244
+244	  increaseMallocCalls();
++n
+246	  return allocateObject(size);
++n
+247	}
++n
+main () at test1.c:14
+14	    *p1 = 100;
++n
+12	  for ( i = 0; i < allocations; i++ ) {
++n
+
+Breakpoint 1, main () at test1.c:13
+13	    char * p1 = (char *) malloc(15 );
++s
+malloc (size=15) at MyMalloc.c:243
+243	  pthread_mutex_lock(&mutex);
++s
+pthread_mutex_lock (mutex=0x602140 <mutex>) at forward.c:192
+192	forward.c: No such file or directory.
++s
+malloc (size=15) at MyMalloc.c:244
+244	  increaseMallocCalls();
++s
+increaseMallocCalls () at MyMalloc.c:229
+229	void increaseMallocCalls() { _mallocCalls++; }
++quit

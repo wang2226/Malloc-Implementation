@@ -1,0 +1,13 @@
+Sat Aug 26 11:18:20 EDT 2017
++b main
+Breakpoint 1 at 0x4008de: file test1.c, line 8.
++run
+Starting program: /home/u89/wang2226/cs252/lab1-src/test1 
+
+Breakpoint 1, main () at test1.c:8
+8	  printf("\n---- Running test1 ---\n");
++n
+12	  for ( i = 0; i < allocations; i++ ) {
++n
+13	    char * p1 = (char *) malloc(15 );
++q

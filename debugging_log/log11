@@ -1,0 +1,71 @@
+Sat Sep 2 20:44:47 EDT 2017
++b main
+Breakpoint 1 at 0x40092e: file test1.c, line 8.
++run
+Starting program: /home/u89/wang2226/cs252/lab1-src/test1 
+
+Breakpoint 1, main () at test1.c:8
+8	  printf("\n---- Running test1 ---\n");
++n
+12	  for ( i = 0; i < allocations; i++ ) {
++n
+13	    char * p1 = (char *) malloc(15 );
++s
+malloc (size=15) at MyMalloc.c:393
+393	  pthread_mutex_lock(&mutex);
++n
+394	  increaseMallocCalls();
++n
+396	  return allocateObject(size);
++s
+allocateObject (size=15) at MyMalloc.c:119
+119	  if (!_initialized)
++n
+122	  if(size <= 0)
++n
+125	  if(size > ARENA_SIZE){
++n
+131	  size_t round_size = (size + 8 - 1) & ~(8 - 1);
++n
+134	  size_t real_size = round_size + sizeof(BoundaryTag);
++n
+136	  if(real_size < sizeof(FreeObject)){
++n
+140	  if(real_size > ARENA_SIZE - 3 * sizeof(BoundaryTag)){
++n
+145	  FreeObject * p = _freeList->free_list_node._next;
++n
+148	  int flag = 0;
++n
+151	  while(p != _freeList){
++n
+152	  	flag = 0;	
++n
+155		size_t obj_size = getSize(&(p->boundary_tag));
++n
+158		if((obj_size >= real_size) && (obj_size < (real_size + 2 * sizeof(BoundaryTag)))){
++p obj_size
+$1 = 2096080
++d 1
++r
+Starting program: /home/u89/wang2226/cs252/lab1-src/test1 
+
+Program received signal SIGSEGV, Segmentation fault.
+0x0000000000400ced in allocateObject (size=15) at MyMalloc.c:187
+187			setSize(newChunk,real_size);
++where
+#0  0x0000000000400ced in allocateObject (size=15) at MyMalloc.c:187
+#1  0x0000000000401392 in malloc (size=15) at MyMalloc.c:396
+#2  0x000000000040094b in main () at test1.c:13
++list
+182			char * temp = (char *)p + obj_size - real_size;
+183	
+184			//new boundary tag
+185			//update the size, left object size and allocated bit of newTag
+186			BoundaryTag * newChunk = (BoundaryTag *)temp;
+187			setSize(newChunk,real_size);
+188			newChunk->_leftObjectSize = getSize(&(p->boundary_tag));
+189			setAllocated(newChunk,1);
+190			
+191			//update newChunk's next's _leftObjSize
++q

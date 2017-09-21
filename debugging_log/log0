@@ -1,0 +1,42 @@
+Thu Aug 24 19:42:50 EDT 2017
++b main
+Breakpoint 1 at 0x40090e: file test1.c, line 8.
++run
+Starting program: /home/u89/wang2226/cs252/lab1-src/test1 
+
+Breakpoint 1, main () at test1.c:8
+8	  printf("\n---- Running test1 ---\n");
++n
+12	  for ( i = 0; i < allocations; i++ ) {
++n
+13	    char * p1 = (char *) malloc(15 );
++s
+malloc (size=15) at MyMalloc.c:243
+243	  pthread_mutex_lock(&mutex);
++n
+244	  increaseMallocCalls();
++n
+246	  return allocateObject(size);
++n
+247	}
++n
+main () at test1.c:14
+14	    *p1 = 100;
++n
+12	  for ( i = 0; i < allocations; i++ ) {
++n
+13	    char * p1 = (char *) malloc(15 );
++n
+14	    *p1 = 100;
++n
+12	  for ( i = 0; i < allocations; i++ ) {
++n
+13	    char * p1 = (char *) malloc(15 );
++n
+14	    *p1 = 100;
++n
+12	  for ( i = 0; i < allocations; i++ ) {
+Quit
++run
+Program not restarted.
++quit

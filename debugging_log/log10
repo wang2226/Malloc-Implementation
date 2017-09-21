@@ -1,0 +1,34 @@
+Sat Sep 2 14:15:11 EDT 2017
++run
+Starting program: /home/u89/wang2226/cs252/lab1-src/test5 
+
+Program received signal SIGSEGV, Segmentation fault.
+0x0000000000401182 in freeObject (ptr=0x802bc0) at MyMalloc.c:325
+325		  rightRight->_leftObjectSize = getSize(curr);
++where
+#0  0x0000000000401182 in freeObject (ptr=0x802bc0) at MyMalloc.c:325
+#1  0x00000000004013d4 in free (ptr=0x802bc0) at MyMalloc.c:402
+#2  0x000000000040098a in main () at test5.c:16
++list
+320		  setAllocated(curr,0);
+321	
+322		  //update _leftObjectSize of the right's right
+323		  char * temp = (char *)right + getSize(right);
+324		  BoundaryTag * rightRight = (BoundaryTag *)temp;
+325		  rightRight->_leftObjectSize = getSize(curr);
+326	  }
+327	
+328	  //merge neither
+329	  else {
++list
+330		  //add the block to the head of the free list
+331		  ((FreeObject *)curr)->free_list_node._next = _freeList->free_list_node._next;
+332		  ((FreeObject *)curr)->free_list_node._prev = _freeList;
+333		  _freeList->free_list_node._next = (FreeObject *)curr;
+334	
+335		  //set the last bit of objectSizeAndAlloc
+336		  setAllocated(curr,0);
+337	  }
+338	
+339	  return;
++q
